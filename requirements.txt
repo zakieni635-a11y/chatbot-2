@@ -1,5 +1,6 @@
 flask
-python-telegram-bot
+python-telegram-bot==20.7
 fuzzywuzzy
 python-Levenshtein
-gunicorn
+requests
+python-dotenv
