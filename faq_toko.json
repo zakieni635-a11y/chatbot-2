@@ -1,0 +1,22 @@
+[
+  {
+    "tag": "jam_operasional",
+    "keywords": ["jam buka", "jam operasional", "buka jam berapa", "sampai jam berapa", "tutup jam berapa"],
+    "answer": "Zaky Fadillah Desain buka setiap hari dari jam 09.00 sampai jam 21.00 WIB."
+  },
+  {
+    "tag": "alamat",
+    "keywords": ["alamat", "lokasi", "di mana", "dimana", "maps", "Debong"],
+    "answer": "Alamat Zaky Fadillah Desain: Debong, Kota Tegal, Jawa Tengah."
+  },
+  {
+    "tag": "cara_order",
+    "keywords": ["cara order", "cara pesan", "beli bagaimana", "order dimana", "order lewat apa", "pesan lewat apa"],
+    "answer": "Cara order Zaky Fadillah Desain:\n• Tokopedia\n• Shopee\n• WhatsApp: 087777204369\n• Datang langsung ke alamat kami di Margadana, Kota Tegal."
+  },
+  {
+    "tag": "produk",
+    "keywords": ["jual apa saja", "produk apa saja", "barang apa saja", "poster", "banner", "aksesoris", "desain web"],
+    "answer": "Zaky Fadillah Desain menyediakan desain, banner, aksesoris, desain web, dan perlengkapan desain lainnya."
+  }
+]
