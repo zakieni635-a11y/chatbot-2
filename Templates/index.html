@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Asisten Virtual - Zaky Fadillah desain</title>
+    <style>
+        :root{
+            /* Emerald / green-friendly accessible palette */
+            --bg1: #062a22; /* deep forest teal */
+            --bg2: #0b3b2e; /* slightly lighter teal */
+            --card: rgba(255,255,255,0.98); /* light frosted card */
+            --accent: #10b981; /* emerald */
+            --accent-2: #34d399; /* lighter emerald */
+            --bot: #f7faf9; /* very light neutral for bot bubble */
+            --user: #047857; /* darker emerald for user bubble (good contrast) */
+            --muted: #6b7280;
+            --text-dark: #042017; /* card text */
+            --card-border: rgba(2,6,23,0.06);
+        }
+        :root[data-theme='dark']{
+            --bg1: #021511; /* near-black forest */
+            --bg2: #052a24; /* deep green-teal */
+            --card: rgba(6,10,12,0.88); /* dark frosted card */
+            --bot: #071617; /* dark bot bubble */
+            --user: #06b6a4; /* bright teal for user bubble on dark */
+            --accent: #10b981;
+            --accent-2: #34d399;
+            --muted: #94a3b8;
+            --text-dark: #e6f7f0;
+            --card-border: rgba(255,255,255,0.04);
+        }
+        html,body{height:100%;margin:0}
+        body {
+            font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+            background: radial-gradient(600px 300px at 10% 10%, rgba(255,255,255,0.04), transparent),
+                        linear-gradient(135deg,var(--bg1),var(--bg2));
+            display:flex;align-items:center;justify-content:center;padding:24px;
+            color: #111827;
+        }
+        .chat-wrapper{
+            width:100%;max-width:900px;display:grid;grid-template-columns:320px 1fr;gap:24px;align-items:start;
+        }
+        .profile-card{
+            background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+            border-radius:16px;padding:20px;color:white;box-shadow:0 10px 30px rgba(2,6,23,0.6);
+            border:1px solid rgba(255,255,255,0.06);
+        }
+        .brand{
+            display:flex;gap:12px;align-items:center;margin-bottom:12px;position:relative;
+        }
+        .avatar{width:64px;height:64px;border-radius:14px;background:linear-gradient(135deg,var(--accent),#ff7ab6);display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;cursor:pointer;overflow:hidden}
+        .avatar img{width:100%;height:100%;object-fit:cover;display:block}
+        .theme-toggle{position:absolute;right:0;top:0;background:rgba(255,255,255,0.08);border-radius:10px;padding:6px;cursor:pointer;font-size:13px;color:#fff}
+        .reset-btn{position:absolute;right:56px;top:6px;background:rgba(255,255,255,0.06);border-radius:8px;padding:6px 8px;cursor:pointer;font-size:12px;color:#fff;border:1px solid rgba(255,255,255,0.04)}
+        h1{font-size:18px;margin:0}
+        p.small{margin:8px 0 0;color:rgba(255,255,255,0.85);font-size:13px}
+
+        .chat-card{
+            background:var(--card);border-radius:16px;padding:18px;min-height:500px;display:flex;flex-direction:column;box-shadow:0 10px 30px rgba(2,6,23,0.25);border:1px solid var(--card-border);
+        }
+        #chat-box{flex:1;overflow:auto;padding-right:8px}
+        .msg{display:flex;margin:12px 0;align-items:flex-end}
+        .msg.bot{justify-content:flex-start}
+        .msg.user{justify-content:flex-end}
+        .bubble{max-width:70%;padding:12px 14px;border-radius:14px;line-height:1.4;box-shadow:0 4px 10px rgba(2,6,23,0.08)}
+        .bot .bubble{background:var(--bot);color:var(--text-dark);border-bottom-left-radius:4px}
+        .user .bubble{background:linear-gradient(90deg,var(--user),#0b7285);color:#fff;border-bottom-right-radius:4px}
+        .meta{font-size:12px;color:var(--muted);margin-top:6px}
+
+        .input-area{display:flex;gap:10px;margin-top:12px;align-items:center}
+        #message{flex:1;padding:12px;border-radius:12px;border:1px solid #e6e6ee;font-size:15px}
+        .send-btn{background:linear-gradient(90deg,#06b6d4,#0ea5e9);border:none;color:#fff;padding:12px 14px;border-radius:12px;cursor:pointer;display:flex;align-items:center;gap:8px}
+        .send-btn:active{transform:translateY(1px)}
+
+        /* small screens */
+        @media (max-width:720px){
+            .chat-wrapper{grid-template-columns:1fr;}
+            .profile-card{order:2}
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-wrapper">
+        <div class="profile-card">
+            <div class="brand">
+                <div class="avatar" id="avatar">ZF</div>
+                <div>
+                    <h1>Asisten Virtual<br><small style="opacity:.9">Zaky Fadillah desain</small></h1>
+                    <p class="small">Tanyakan jam buka, alamat, cara order, atau produk. Mohon gunakan bahasa yang sopan.</p>
+                </div>
+                <div class="theme-toggle" id="themeToggle">🌙</div>
+                <div class="reset-btn" id="resetBtn" title="Reset avatar & tema">Reset</div>
+                <input type="file" id="avatarInput" accept="image/*" style="display:none" />
+            </div>
+            <div style="margin-top:16px;font-size:14px;color:rgba(255,255,255,0.9)">
+                <strong>Alamat:</strong>
+                <div>Debong, Kota Tegal, Jawa Tengah</div>
+                <div style="margin-top:8px"><strong>WA:</strong> 087777204369</div>
+            </div>
+        </div>
+
+        <div class="chat-card">
+            <div id="chat-box"></div>
+
+            <div class="input-area">
+                <input type="text" id="message" placeholder="Tulis pertanyaan tentang Zaky Fadillah desain..." autocomplete="off" />
+                <button class="send-btn" onclick="sendMessage()">Kirim</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const chatBox = document.getElementById("chat-box");
+        const input = document.getElementById("message");
+
+        function addMessage(text, sender) {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'msg ' + sender;
+            const bubble = document.createElement('div');
+            bubble.className = 'bubble';
+            bubble.innerHTML = text.replace(/\n/g, '<br>');
+            wrapper.appendChild(bubble);
+            chatBox.appendChild(wrapper);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        async function sendMessage() {
+            const text = input.value.trim();
+            if (!text) return;
+            addMessage(text, 'user');
+            input.value = '';
+
+            try {
+                const response = await fetch('/chat', {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: text })
+                });
+                if (!response.ok) throw new Error('Network error');
+                const data = await response.json();
+                addMessage(data.reply, 'bot');
+            } catch (err) {
+                addMessage('Terjadi kesalahan koneksi. Silakan coba lagi.', 'bot');
+            }
+        }
+
+        input.addEventListener('keydown', function(e){ if(e.key === 'Enter') sendMessage(); });
+
+        // Avatar upload, reset, and theme toggle
+        const avatar = document.getElementById('avatar');
+        const avatarInput = document.getElementById('avatarInput');
+        const themeToggle = document.getElementById('themeToggle');
+        const resetBtn = document.getElementById('resetBtn');
+
+        const defaultAvatarSVG = `
+            <svg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'>
+              <defs>
+                <linearGradient id='g' x1='0' x2='1'>
+                  <stop offset='0' stop-color='#ffb86b'/>
+                  <stop offset='1' stop-color='#ff7ab6'/>
+                </linearGradient>
+              </defs>
+              <rect width='64' height='64' rx='12' fill='url(#g)' />
+              <text x='50%' y='54%' font-size='24' text-anchor='middle' fill='white' font-family='Inter, Arial' font-weight='700'>ZF</text>
+            </svg>`;
+
+        function loadAvatar(){
+            try{
+                const data = localStorage.getItem('chat_avatar');
+                avatar.innerHTML = '';
+                if(data){
+                    const img = document.createElement('img'); img.src = data; avatar.appendChild(img);
+                } else {
+                    avatar.innerHTML = defaultAvatarSVG;
+                }
+            }catch(e){console.warn(e); avatar.innerHTML = defaultAvatarSVG}
+        }
+        avatar.addEventListener('click', ()=> avatarInput.click());
+        avatarInput.addEventListener('change', (ev)=>{
+            const f = ev.target.files && ev.target.files[0];
+            if(!f) return;
+            const reader = new FileReader();
+            reader.onload = ()=>{
+                localStorage.setItem('chat_avatar', reader.result);
+                loadAvatar();
+            };
+            reader.readAsDataURL(f);
+        });
+
+        resetBtn.addEventListener('click', ()=>{
+            localStorage.removeItem('chat_avatar');
+            localStorage.removeItem('chat_theme');
+            setTheme('light');
+            loadAvatar();
+        });
+
+        // theme handling
+        function setTheme(t){
+            document.documentElement.setAttribute('data-theme', t);
+            localStorage.setItem('chat_theme', t);
+            themeToggle.textContent = t === 'dark' ? '☀️' : '🌙';
+        }
+        themeToggle.addEventListener('click', ()=>{
+            const cur = document.documentElement.getAttribute('data-theme') || 'light';
+            setTheme(cur === 'dark' ? 'light' : 'dark');
+        });
+        // init
+        (function(){
+            const saved = localStorage.getItem('chat_theme') || 'light';
+            setTheme(saved);
+            loadAvatar();
+        })();
+
+        // opening message
+        addMessage('Halo, saya asisten virtual Zaky Fadillah desain 👋\\nSilakan tanya: jam buka, alamat, cara order, atau produk yang tersedia.', 'bot');
+    </script>
+</body>
+</html>
