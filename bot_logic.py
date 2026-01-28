@@ -1,34 +1,40 @@
 import json
+import os
 from fuzzywuzzy import fuzz
 
-# Load FAQ
-with open("faq_toko.json", "r", encoding="utf-8") as f:
-    faq_data = json.load(f)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+FAQ_PATH = os.path.join(BASE_DIR, "faq_toko.json")
 
-# Daftar kata kasar
+try:
+    with open(FAQ_PATH, "r", encoding="utf-8") as f:
+        faq_data = json.load(f)
+except Exception as e:
+    print("⚠️ Gagal load faq_toko.json:", e)
+    faq_data = []
+
 bad_words = ["bodoh", "anjing", "babi", "goblok", "bangsat", "brengsek"]
 
-def get_bot_reply(user_text):
-    user_text_lower = user_text.lower().strip()
+def get_bot_reply(user_text: str) -> str:
+    if not user_text:
+        return "Boleh tulis pertanyaannya ya 😊"
 
-    # Cek kata kasar dulu
+    text = user_text.lower().strip()
+
     for word in bad_words:
-        if word in user_text_lower:
+        if word in text:
             return "Mohon gunakan bahasa yang sopan ya 😇"
 
-    # Fuzzy matching FAQ
     best_score = 0
     best_answer = None
+
     for item in faq_data:
         for keyword in item.get("keywords", []):
-            score = fuzz.partial_ratio(user_text_lower, keyword.lower())
+            score = fuzz.partial_ratio(text, keyword.lower())
             if score > best_score:
                 best_score = score
                 best_answer = item.get("answer")
 
-    # Threshold minimal untuk dianggap matching
-    if best_score >= 60:
+    if best_score >= 60 and best_answer:
         return best_answer
 
-    # Jika tidak ada yang cocok
-    return "Maaf, saya tidak mengerti pertanyaan Anda. Silakan tanyakan hal lain."
+    return "Maaf, saya belum memahami pertanyaan kak 😊"
