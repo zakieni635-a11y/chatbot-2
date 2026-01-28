@@ -9,7 +9,7 @@ try:
     with open(FAQ_PATH, "r", encoding="utf-8") as f:
         faq_data = json.load(f)
 except Exception as e:
-    print("⚠️ Gagal load faq_toko.json:", e)
+    print("Gagal load faq_toko.json:", e)
     faq_data = []
 
 bad_words = ["bodoh", "anjing", "babi", "goblok", "bangsat", "brengsek"]
